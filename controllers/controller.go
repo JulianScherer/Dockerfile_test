@@ -8,6 +8,24 @@ import (
 	"github.com/guilhermeonrails/api-go-gin/models"
 )
 
+// HealthCheck verifica a saúde da aplicação e do banco de dados
+func HealthCheck(c *gin.Context) {
+	// Pegamos a instância do DB do pacote database
+	db, err := database.DB.DB()
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"status": "error", "message": "failed to get db"})
+		return
+	}
+
+	// O Ping verifica se a conexão com o banco está viva
+	if err := db.Ping(); err != nil {
+		c.JSON(http.StatusServiceUnavailable, gin.H{"status": "unhealthy", "message": "database is down"})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"status": "healthy"})
+}
+
 func Saudacoes(c *gin.Context) {
 	nome := c.Params.ByName("nome")
 	c.JSON(200, gin.H{

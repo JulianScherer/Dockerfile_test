@@ -1,3 +1,19 @@
-pkg
+# Binários e executáveis
 main
-postgres-data
+*.exe
+*.dll
+*.so
+
+# Dados do banco
+postgres-data/
+
+# Variáveis de ambiente
+.env
+
+# Pastas de dependências/build
+pkg/
+vendor/
+
+# IDEs
+.vscode/
+.idea/
