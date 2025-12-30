@@ -2,7 +2,7 @@ name: "Construção do artefato"
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "curso_2"]
   workflow_dispatch:
 
 jobs:
