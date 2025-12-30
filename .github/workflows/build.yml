@@ -11,7 +11,7 @@ jobs:
   build-and-push:
     runs-on: ubuntu-latest
 
-    # Sobe um banco real para validar seus testes de Análise e Desenvolvimento de Sistemas
+    # Sobe o Postgres temporário para validar o código de Análise e Desenvolvimento de Sistemas
     services:
       postgres:
         image: postgres:latest
@@ -36,7 +36,7 @@ jobs:
         with:
           go-version: '1.22'
 
-      # Resolve o erro de "invalid port" injetando as variáveis corretas
+      # FIX: Injeta variáveis locais para o ambiente de teste do GitHub
       - name: Executa Testes Unitários
         env:
           DB_HOST: localhost
@@ -46,7 +46,6 @@ jobs:
           DB_PORT: 5432
         run: go test -v main_test.go
 
-      # Passos originais de Build que você já validou
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
